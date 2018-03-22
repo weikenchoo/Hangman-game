@@ -72,9 +72,10 @@ while guessUse<guessNum && isequal(chosenWord, wordState) == 0
     goodGuess= ismember(chosenWord,chosenLetter);
     % checks whether the letter is a member of the word given
     if ismember(chosenLetter,pickedLetters)~=1 & any(goodGuess) == true 
-        
+        % replace '-' with the letter
         wordState(goodGuess) = chosenLetter;
         disp(wordState);
+        % letter added to list
         pickedLetters=[pickedLetters,chosenLetter];
         disp('You got one!');
     elseif isempty(chosenLetter) == true
@@ -84,6 +85,7 @@ while guessUse<guessNum && isequal(chosenWord, wordState) == 0
         if ismember(chosenLetter,pickedLetters)==1
             disp('You already tried that.');
         else
+            % letter added to list
             pickedLetters=[pickedLetters,chosenLetter];
             guessUse= guessUse+1;
             disp('Not this one, try again.');
@@ -98,21 +100,24 @@ end
 clc;
 disp('GAME OVER')
 playerScore = guessUse;
-
+% saves score if player manages to guess the word
 if isequal(chosenWord,wordState)
     fprintf('Congratulations %s ! Your score is %d !\n',char(playerName),guessUse);
     if lvl ==1 
+        % calls function saveScore to save score 
         fileName = 'easyScore.mat';
         saveScore(fileName,playerName,playerScore);
         
     elseif lvl ==2
+        % calls function saveScore to save score
         fileName = 'mediumScore.mat';
         saveScore(fileName,playerName,playerScore);
         
     elseif lvl ==3
+        % calls function saveScore to save score
         fileName = 'hardScore.mat';
         saveScore(fileName,playerName,playerScore);
-end
+    end
 else
     fprintf('Sorry you ran out of attempts.\nThe word is ');
     disp(chosenWord);
